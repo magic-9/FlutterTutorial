@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:nettuto/classes/Qutes.dart';
 import 'package:nettuto/main.dart';
+import 'package:nettuto/pages/card_page.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -11,10 +13,9 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
 
   bool is_loading = false;
-  List<String> quotes = [
-    'By yourself',
-    "don't do this here",
-    "i'm not vagetables"
+  List<Quotes> quotes = [
+    Quotes("peter","welcome to cairo"),
+    Quotes("peter","hello friend"),
   ];
 
   Widget getContent(){
@@ -33,6 +34,24 @@ class _HomePageState extends State<HomePage> {
 
        );
      }
+  }
+
+  Widget getCard(quote){
+    return Container(
+      width: 300,
+      height: 100,
+      child: Card(
+        child: Center(
+          child:Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(quote.text),
+              Text(quote.author)
+            ],
+          ),
+        ),
+      ),
+    );
   }
   @override
   Widget build(BuildContext context) {
@@ -127,6 +146,13 @@ class _HomePageState extends State<HomePage> {
                     )
                   ],
                 ),
+                Column(
+                  children: quotes.map((quote) => new CardPage(quote: quote, delete: (){
+                    setState(() {
+                      quotes.remove(quote);
+                    });
+                  },) ).toList(),
+                )
 
               ],
             ),
